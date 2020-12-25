@@ -169,37 +169,6 @@ const appendTiles = function(dino) {
   
 
 
-
-};
-
-
-// Remove form from screen
-
-const dataForm = document.querySelector("#dino-compare");
-
-function hideForm() {
-  dataForm.style.display = "none";
-  
-}
-
-//Select random Dino fact to display
-
-const randomFact = function(obj) {
-  const facts = [
-    "fact",
-    "weightFact",
-    "heightFact",
-    "dietFact",
-    "when",
-    "where"
-  ];
-  const random = facts[Math.floor(Math.random() * facts.length)];
-  return obj[random];
-};
-
-
-
-
   //Create tooltip element to display extra facts on hover
   let tooltip = document.createElement("div");
   tooltip.style.display = "none";
@@ -232,4 +201,35 @@ tooltip.style.display = "none";
 tooltip.style.opacity = "0";
 tooltip.innerHTML = '';
 }; 
+
+};
+
+
+// Remove form from screen
+
+const dataForm = document.querySelector("#dino-compare");
+
+function hideForm() {
+  dataForm.style.display = "none";
+  
+}
+
+//Select random Dino fact to display
+
+const randomFact = function(obj) {
+  const facts = [
+    "fact",
+    "weightFact",
+    "heightFact",
+    "dietFact",
+    "when",
+    "where"
+  ];
+  const random = facts[Math.floor(Math.random() * facts.length)];
+  return obj[random];
+};
+
+
+
+
 

@@ -39,8 +39,6 @@ getData().then(data => {
   });
 });
 
-console.log(dinoArray);
-
 // Create Human Object
 
 const humanObj = {
@@ -74,7 +72,6 @@ document.getElementById("btn").addEventListener("click", event => {
   const allSpeciesArray = dinosArrayOne.concat(humanObj, dinosArrayTwo);
 
   // Add tiles to DOM
-
   allSpeciesArray.forEach(item => {
     appendTiles(item);
   });
@@ -86,7 +83,7 @@ document.getElementById("btn").addEventListener("click", event => {
 //Method 1-Height
 // NOTE: Height in JSON file is in inches.
 
-Dino.prototype.compareHeight = function() {
+Dino.prototype.compareHeight = function(humanObj) {
   const humanHeight = humanObj.height;
   const dinoHeight = this.height;
   const diffHtH = humanHeight - dinoHeight;
@@ -107,7 +104,7 @@ Dino.prototype.compareHeight = function() {
 // Method 2-Weight
 // NOTE: Weight in JSON file is in lbs.
 
-Dino.prototype.compareWeight = function() {
+Dino.prototype.compareWeight = function(humanObj) {
   const humanWeight = humanObj.weight;
   const dinoWeight = this.weight;
   const diffWtH = humanWeight - dinoWeight;
@@ -127,7 +124,7 @@ Dino.prototype.compareWeight = function() {
 // Create Dino Compare
 // Method 3-Diet.
 
-Dino.prototype.compareDiet = function() {
+Dino.prototype.compareDiet = function(humanObj) {
   const humanDiet = humanObj.diet;
   const dinoDiet = this.diet;
   if (humanDiet === dinoDiet) {
@@ -139,11 +136,10 @@ Dino.prototype.compareDiet = function() {
 };
 
 // Generate Tiles for each Dino in Array and append to DOM
-
 const generateGrid = document.querySelector("main");
 
 const appendTiles = function(dino) {
-  let tile = document.createElement("div");
+  const tile = document.createElement("div");
 
   tile.classList.add("grid-item");
   if (dino.species === "humanObj") {
@@ -160,17 +156,15 @@ const appendTiles = function(dino) {
   tile.innerHTML += `<img src= ${dino.image}>`;
   generateGrid.appendChild(tile);
 
-
-  
   //Create tooltip element to display extra facts on hover
-  let tooltip = document.createElement("div");
+  const tooltip = document.createElement("div");
   tooltip.style.display = "none";
   tooltip.style.opacity = "0";
   tooltip.style.position = "absolute";
   tooltip.style.width = "25%";
   tooltip.style.height = "10%";
   tooltip.style.padding = "10px";
-  
+
   tooltip.style.background = "#fff";
   tooltip.style.borderRadius = "25px";
   tooltip.border = "1px solid rgba(0, 0, 0, 0.2)";
@@ -180,20 +174,20 @@ const appendTiles = function(dino) {
   tile.addEventListener("mouseout", hideExtraFacts);
 
   function showExtraFacts() {
-    if (dino.species == "humanObj"  ||  dino.species == "Pigeon" ){
+    if (dino.species == "humanObj" 
+    || dino.species == "Pigeon" 
+    || tile.innerHTML === tooltip.innerHTML) {
       tooltip.style.display = "none";
       tooltip.style.opacity = "0";
       tooltip.innerHTML = "";
     } else 
     tooltip.style.display = "block";
-    tooltip.style.fontSize = "0.9em"
+    tooltip.style.fontSize = "0.9em";
     tooltip.style.opacity = "0.7";
     tooltip.style.position = "absolute";
     tooltip.innerHTML += `<span> ${dino.fact}</span>`;
     tooltip.style.top = this.offsetTop + 400 + "px";
     tooltip.style.left = this.offsetLeft + 30 + "px";
-  //console.log(this.offsetTop);
-  
   }
 
   function hideExtraFacts() {
@@ -201,12 +195,7 @@ const appendTiles = function(dino) {
     tooltip.style.opacity = "0";
     tooltip.innerHTML = "";
   }
-
 };
-
-
-
-
 
 // Remove form from screen
 

@@ -22,27 +22,24 @@ const getData = async () => {
   return data.Dinos;
 };
 
-getData()
-  .then(data => {
-    const dinos = data;
+getData().then(data => {
+  const dinos = data;
 
-    dinos.forEach(dino => {
-      const dinoObj = new Dino([
-        dino.species,
-        dino.weight,
-        dino.height,
-        dino.diet,
-        dino.where,
-        dino.when,
-        dino.fact
-      ]);
-      dinoArray.push(dinoObj);
-    });
+  dinos.forEach(dino => {
+    const dinoObj = new Dino([
+      dino.species,
+      dino.weight,
+      dino.height,
+      dino.diet,
+      dino.where,
+      dino.when,
+      dino.fact
+    ]);
+    dinoArray.push(dinoObj);
   });
+});
 
-
-  
-  console.log(dinoArray);
+console.log(dinoArray);
 
 // Create Human Object
 
@@ -51,20 +48,19 @@ const humanObj = {
   species: "humanObj"
 };
 
-
-  // Use IIFE to get humanObj input 
+// Use IIFE to get humanObj input
 //const humanObj = {};
 document.getElementById("btn").addEventListener("click", event => {
   (function getHumans() {
     event.preventDefault();
-    humanObj.name = document.getElementById("name").value,
-    humanObj.feet = parseInt(document.getElementById("feet").value);
+    (humanObj.name = document.getElementById("name").value),
+      (humanObj.feet = parseInt(document.getElementById("feet").value));
     humanObj.inches = parseInt(document.getElementById("inches").value);
     humanObj.height = humanObj.feet * 12 + humanObj.inches;
     humanObj.weight = parseInt(document.getElementById("weight").value);
     humanObj.diet = document.getElementById("diet").value;
   })();
- 
+
   dinoArray.forEach(dino => {
     dino.heightFact = dino.compareHeight(humanObj);
     dino.weightFact = dino.compareWeight(humanObj);
@@ -94,7 +90,7 @@ Dino.prototype.compareHeight = function() {
   const humanHeight = humanObj.height;
   const dinoHeight = this.height;
   const diffHtH = humanHeight - dinoHeight;
-  const diffHtD = dinoHeight - humanHeight; 
+  const diffHtD = dinoHeight - humanHeight;
 
   if (humanHeight > dinoHeight) {
     return ` ${this.species} was  only ${this.height} inches tall.  ${this.species} was ${diffHtH} inches shorter than you.`;
@@ -115,7 +111,7 @@ Dino.prototype.compareWeight = function() {
   const humanWeight = humanObj.weight;
   const dinoWeight = this.weight;
   const diffWtH = humanWeight - dinoWeight;
-  const diffWtD = dinoWeight - humanWeight; 
+  const diffWtD = dinoWeight - humanWeight;
 
   if (humanWeight > dinoWeight) {
     return ` ${this.species} weighed  only ${this.weight} lbs. ${this.species} was  ${diffWtH} lbs lighter than you. \n`;
@@ -159,7 +155,6 @@ const appendTiles = function(dino) {
     tile.innerHTML = `<h3>${dino.species}</h3>`;
     const fact = randomFact(dino);
     tile.innerHTML += `<p>${fact}</p>`;
-
   }
 
   tile.innerHTML += `<img src= ${dino.image}>`;
@@ -167,42 +162,50 @@ const appendTiles = function(dino) {
 
 
   
-
-
   //Create tooltip element to display extra facts on hover
   let tooltip = document.createElement("div");
   tooltip.style.display = "none";
-  tooltip.style.opacity = '0';
-  tooltip.style.position = 'fixed';
-  tooltip.style.left = '10px';
-  tooltip.style.top = '10px';
-  tooltip.style.width = '200px';
-  tooltip.style.height = '200px';
-  tooltip.style.padding = '10px';
-  tooltip.style.background = '#fff';
-  tooltip.style.borderRadius = "25px"
+  tooltip.style.opacity = "0";
+  tooltip.style.position = "absolute";
+  tooltip.style.width = "25%";
+  tooltip.style.height = "10%";
+  tooltip.style.padding = "10px";
+  
+  tooltip.style.background = "#fff";
+  tooltip.style.borderRadius = "25px";
+  tooltip.border = "1px solid rgba(0, 0, 0, 0.2)";
   document.body.appendChild(tooltip);
 
+  tile.addEventListener("mouseover", showExtraFacts);
+  tile.addEventListener("mouseout", hideExtraFacts);
 
+  function showExtraFacts() {
+    if (dino.species == "humanObj"  ||  dino.species == "Pigeon" ){
+      tooltip.style.display = "none";
+      tooltip.style.opacity = "0";
+      tooltip.innerHTML = "";
+    } else 
+    tooltip.style.display = "block";
+    tooltip.style.fontSize = "0.9em"
+    tooltip.style.opacity = "0.7";
+    tooltip.style.position = "absolute";
+    tooltip.innerHTML += `<span> ${dino.fact}</span>`;
+    tooltip.style.top = this.offsetTop + 400 + "px";
+    tooltip.style.left = this.offsetLeft + 30 + "px";
+  //console.log(this.offsetTop);
+  
+  }
 
-tile.addEventListener("mouseover", showExtraFacts);
-tile.addEventListener("mouseout", hideExtraFacts);
+  function hideExtraFacts() {
+    tooltip.style.display = "none";
+    tooltip.style.opacity = "0";
+    tooltip.innerHTML = "";
+  }
 
-
-function showExtraFacts() { 
-tooltip.style.display = "block";
-tooltip.style.opacity = "0.7";
-tooltip.innerHTML += `<span>${dino.species} \n ${dino.fact}</span>`;
-console.log(dino);
 };
 
-function hideExtraFacts() { 
-tooltip.style.display = "none";
-tooltip.style.opacity = "0";
-tooltip.innerHTML = '';
-}; 
 
-};
+
 
 
 // Remove form from screen
@@ -211,7 +214,6 @@ const dataForm = document.querySelector("#dino-compare");
 
 function hideForm() {
   dataForm.style.display = "none";
-  
 }
 
 //Select random Dino fact to display
@@ -228,8 +230,3 @@ const randomFact = function(obj) {
   const random = facts[Math.floor(Math.random() * facts.length)];
   return obj[random];
 };
-
-
-
-
-

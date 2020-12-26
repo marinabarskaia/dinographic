@@ -4,14 +4,14 @@
 This web application is  build using Object Oriented JavaScript. It  generates a comparison of human physical traits to dinosaurus's based on user provided information, as well as other interesting facts about dinosaurus.
 
 ## Front End Technologies:
-html/CSS
+ html/CSS<br>
 JavaScript
 
 ## Coding Style
 JSLint linting to Udacity Javascript style requirements
 
 ## Setup/Installation
-Clone repository: git clone https://github.com/marinabarskaia/dinographic
+Clone repository: git clone https://github.com/marinabarskaia/dinographic<br>
 Run locally using a local web server .
 
 
